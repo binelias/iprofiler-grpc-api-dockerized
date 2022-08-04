@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  #backend api
+  iprofiler-api:
+    container_name: backend
+    build: ./
+    command: npm start
+    working_dir: /usr/src/iprofiler-grpc-api
+    environment:
+      POSTGRES_URI: postgres://rayan:secret@postgres:5432/iprofiler-docker
+    links:
+      - postgres
+    ports: 
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/iprofiler-grpc-api
+  
+  #Postgres
+  postgres:
+    environment:
+      POSTGRES_USER: rayan
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: iprofiler-docker
+      POSTGRES_HOST: postgres
+    build: ./postgres
+    ports:
+      - "5432:5432"
