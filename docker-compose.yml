@@ -9,8 +9,10 @@ services:
     working_dir: /usr/src/iprofiler-grpc-api
     environment:
       POSTGRES_URI: postgres://rayan:secret@postgres:5432/iprofiler-docker
+      REDIS_URI: redis://redis:6379
     links:
       - postgres
+      - redis
     ports: 
       - "3000:3000"
     volumes:
@@ -26,3 +28,9 @@ services:
     build: ./postgres
     ports:
       - "5432:5432"
+  
+  #Redis
+  redis:
+    image: Redis
+    ports:
+      - "6379:6379"
